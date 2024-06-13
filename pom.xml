@@ -13,24 +13,25 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<parent>
 		<groupId>org.hobsoft</groupId>
 		<artifactId>hobsoft-parent</artifactId>
 		<version>0.4.2</version>
 	</parent>
-	
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.hobsoft.spring</groupId>
 	<artifactId>spring-rest-template-logger</artifactId>
-	<version>2.0.1-SNAPSHOT</version>
-	
+	<version>2.0.1.GEMMA</version>
+
 	<name>Spring RestTemplate Logger</name>
 	<description>Spring RestTemplate customizer to log HTTP traffic.</description>
 	<url>https://github.com/markhobson/rest-template-logger</url>
 	<inceptionYear>2017</inceptionYear>
-	
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -38,42 +39,31 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
-	<scm>
-		<connection>scm:git:git@github.com:markhobson/rest-template-logger.git</connection>
-		<developerConnection>scm:git:git@github.com:markhobson/rest-template-logger.git</developerConnection>
-		<url>https://github.com/markhobson/rest-template-logger</url>
-		<tag>HEAD</tag>
-	</scm>
-	
-	<issueManagement>
-		<system>GitHub</system>
-		<url>https://github.com/markhobson/rest-template-logger/issues</url>
-	</issueManagement>
-	
-	<developers>
-		<developer>
-			<id>markhobson</id>
-			<name>Mark Hobson</name>
-			<email>markhobson@gmail.com</email>
-			<roles>
-				<role>Project Lead</role>
-			</roles>
-			<timezone>0</timezone>
-		</developer>
-	</developers>
-	
+
 	<properties>
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.test.skip>true</maven.test.skip>
+		<nexus.url>https://nexus.gemma-eviden.com:8443/repository</nexus.url>
 	</properties>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>maven-snapshots</id>
+			<url>${nexus.url}/maven-snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>maven-releases</id>
+			<url>${nexus.url}/maven-releases/</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
-	
+
 		<pluginManagement>
-		
+
 			<plugins>
-			
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -81,13 +71,13 @@
 						<release>17</release>
 					</configuration>
 				</plugin>
-			
+
 			</plugins>
-		
+
 		</pluginManagement>
-		
+
 		<plugins>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -130,15 +120,15 @@
 						<version>1.5.1</version>
 					</dependency>
 				</dependencies>
-			</plugin>		
+			</plugin>
 		</plugins>
-	
+
 	</build>
-	
+
 	<dependencyManagement>
-		
+
 		<dependencies>
-			
+
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
@@ -146,7 +136,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>com.github.tomakehurst</groupId>
 				<artifactId>wiremock</artifactId>
@@ -163,34 +153,34 @@
 			</dependency>
 			<!--  ####REWRITE BOM -->
 		</dependencies>
-		
+
 	</dependencyManagement>
-	
+
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.github.tomakehurst</groupId>
 			<artifactId>wiremock</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 	</dependencies>
-	
+
 </project>
 
