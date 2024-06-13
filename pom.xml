@@ -44,7 +44,7 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.test.skip>true</maven.test.skip>
-		<nexus.url>https://nexus.gemma-eviden.com:8443/repository</nexus.url>
+		<nexus.url>https://nexus.gemma-atos.net:8443/repository</nexus.url>
 	</properties>
 
 	<distributionManagement>
@@ -71,59 +71,76 @@
 						<release>17</release>
 					</configuration>
 				</plugin>
-
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<executions>
+						<execution>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.openrewrite.maven</groupId>
+					<artifactId>rewrite-maven-plugin</artifactId>
+					<version>5.32.1</version>
+					<configuration>
+						<activeRecipes>
+							<recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>
+							<recipe>org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_2</recipe>
+							<recipe>org.openrewrite.java.spring.boot2.SpringBoot2JUnit4to5Migration</recipe>
+							<recipe>org.openrewrite.hibernate.MigrateToHibernate63</recipe>
+							<recipe>org.openrewrite.hibernate.TypeAnnotationParameter</recipe>
+						</activeRecipes>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.openrewrite.recipe</groupId>
+							<artifactId>rewrite-migrate-java</artifactId>
+							<version>2.16.0</version>
+						</dependency>
+						<dependency>
+							<groupId>org.openrewrite.recipe</groupId>
+							<artifactId>rewrite-spring</artifactId>
+							<version>5.11.0</version>
+						</dependency>
+						<dependency>
+							<groupId>org.openrewrite.recipe</groupId>
+							<artifactId>rewrite-hibernate</artifactId>
+							<version>1.5.1</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				
 			</plugins>
-
 		</pluginManagement>
 
-		<plugins>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.openrewrite.maven</groupId>
-				<artifactId>rewrite-maven-plugin</artifactId>
-				<version>5.32.1</version>
-				<configuration>
-					<activeRecipes>
-						<recipe>org.openrewrite.java.migrate.UpgradeToJava17</recipe>
-						<recipe>org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_2</recipe>
-						<recipe>org.openrewrite.java.spring.boot2.SpringBoot2JUnit4to5Migration</recipe>
-						<recipe>org.openrewrite.hibernate.MigrateToHibernate63</recipe>
-						<recipe>org.openrewrite.hibernate.TypeAnnotationParameter</recipe>
-					</activeRecipes>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.openrewrite.recipe</groupId>
-						<artifactId>rewrite-migrate-java</artifactId>
-						<version>2.16.0</version>
-					</dependency>
-					<dependency>
-						<groupId>org.openrewrite.recipe</groupId>
-						<artifactId>rewrite-spring</artifactId>
-						<version>5.11.0</version>
-					</dependency>
-					<dependency>
-						<groupId>org.openrewrite.recipe</groupId>
-						<artifactId>rewrite-hibernate</artifactId>
-						<version>1.5.1</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-		</plugins>
-
 	</build>
+
+	<profiles>
+		<profile>
+			<id>repos</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>maven-public</id>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<url>${nexus.url}/maven-public/</url>
+					<layout>default</layout>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
 
 	<dependencyManagement>
 
