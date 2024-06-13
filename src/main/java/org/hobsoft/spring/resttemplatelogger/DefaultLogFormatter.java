@@ -46,7 +46,7 @@ public class DefaultLogFormatter implements LogFormatter
 	{
 		String formattedBody = formatBody(body, getCharset(request));
 		
-		return String.format("Request: %s %s %s", request.getMethod(), request.getURI(), formattedBody);
+		return "Request: %s %s %s".formatted(request.getMethod(), request.getURI(), formattedBody);
 	}
 	
 	@Override
@@ -54,7 +54,7 @@ public class DefaultLogFormatter implements LogFormatter
 	{
 		String formattedBody = formatBody(copyToByteArray(response.getBody()), getCharset(response));
 		
-		return String.format("Response: %s %s", response.getStatusCode().value(), formattedBody);
+		return "Response: %s %s".formatted(response.getStatusCode().value(), formattedBody);
 	}
 	
 	// ----------------------------------------------------------------------------------------------------------------

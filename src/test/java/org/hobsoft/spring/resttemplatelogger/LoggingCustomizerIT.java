@@ -14,20 +14,20 @@
 package org.hobsoft.spring.resttemplatelogger;
 
 import org.apache.commons.logging.Log;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 
 import static java.net.HttpURLConnection.HTTP_OK;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -49,8 +49,8 @@ public class LoggingCustomizerIT
 	// fields
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	@Rule
-	public WireMockRule wireMockRule = new WireMockRule(options().dynamicPort());
+	@RegisterExtension
+	private WireMockExtension wireMockRule = WireMockExtension.newInstance().options(options().dynamicPort()).build();
 	
 	private Log log;
 	
@@ -60,7 +60,7 @@ public class LoggingCustomizerIT
 	// JUnit methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		log = mock(Log.class);
@@ -84,7 +84,7 @@ public class LoggingCustomizerIT
 		
 		restTemplate.postForEntity("/hello", "world", String.class);
 		
-		verify(log).debug(String.format("Request: POST http://localhost:%d/hello world", wireMockRule.port()));
+		verify(log).debug("Request: POST http://localhost:%d/hello world".formatted(wireMockRule.port()));
 	}
 	
 	@Test

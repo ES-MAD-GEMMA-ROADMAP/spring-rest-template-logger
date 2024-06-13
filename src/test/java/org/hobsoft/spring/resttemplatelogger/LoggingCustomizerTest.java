@@ -18,11 +18,11 @@ import java.io.InputStream;
 import java.net.URI;
 
 import org.apache.commons.logging.Log;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.mock.http.client.MockClientHttpRequest;
@@ -31,8 +31,8 @@ import org.springframework.web.client.RestTemplate;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpMethod.GET;
@@ -42,7 +42,7 @@ import static org.springframework.util.StreamUtils.copyToByteArray;
 /**
  * Tests {@code LoggingCustomizer}.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class LoggingCustomizerTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class LoggingCustomizerTest
 	// JUnit methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		Log log = mock(Log.class);

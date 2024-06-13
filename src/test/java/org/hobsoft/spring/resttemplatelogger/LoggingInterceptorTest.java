@@ -16,11 +16,11 @@ package org.hobsoft.spring.resttemplatelogger;
 import java.io.IOException;
 
 import org.apache.commons.logging.Log;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.mock.http.client.MockClientHttpRequest;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 /**
  * Tests {@code LoggingInterceptor}.
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class LoggingInterceptorTest
 {
 	// ----------------------------------------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ public class LoggingInterceptorTest
 	// JUnit methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		when(log.isDebugEnabled()).thenReturn(true);

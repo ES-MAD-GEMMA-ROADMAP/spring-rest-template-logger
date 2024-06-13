@@ -16,16 +16,16 @@ package org.hobsoft.spring.resttemplatelogger;
 import java.io.IOException;
 import java.net.URI;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.mock.http.client.MockClientHttpRequest;
 import org.springframework.mock.http.client.MockClientHttpResponse;
 
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.parseMediaType;
@@ -45,7 +45,7 @@ public class DefaultLogFormatterTest
 	// JUnit methods
 	// ----------------------------------------------------------------------------------------------------------------
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		formatter = new DefaultLogFormatter();
